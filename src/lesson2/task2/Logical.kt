@@ -3,6 +3,8 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Пример
@@ -18,7 +20,19 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    val a = number / 100 // первые два числа
+    val a1 = a / 10 // первое число
+    val a2 = a % 10 // второе число
+    val b = number % 100 // вторые два числа
+    val b1 = b / 10 // третье число
+    val b2 = b % 10 // четвертое число
+    return when {
+        (a1 + a2) == (b1 + b2) -> true
+        else -> false
+
+    }
+}
 
 /**
  * Простая
@@ -27,7 +41,15 @@ fun isNumberHappy(number: Int): Boolean = TODO()
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
+   return when {
+        (x1 == x2) -> true
+        (y1 == y2) -> true
+        ((x1 + y1) == (x2 + y2)) -> true
+        ((x1 - y1) == (x2 - y2)) -> true
+        else -> false
+    }
+}
 
 
 /**
@@ -36,7 +58,26 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
+fun daysInMonth(month: Int, year: Int): Int {
+    val y = year % 400
+    val v = year % 100
+    val b = year % 4
+    val c = when {
+        (y == 0) -> 29
+        (v == 0) -> 28
+        (b == 0) -> 29
+        else -> 28
+    }
+
+    return when(month){
+        1, 3, 5, 7, 8, 10, 12 -> 31
+        4, 6, 9, 11 -> 30
+        2 -> c
+        else -> 0
+    }
+
+
+}
 
 /**
  * Средняя
@@ -48,7 +89,19 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = TODO()
+): Boolean {
+    //(a1 - a2)^2 + (b1-b2)^2 < (r-r2)^2 то лежит
+    val a: Double = (x2 - x1).pow(2)
+    val b: Double = (y2 - y1).pow(2)
+    val c: Double = (r2 - r1).pow(2)
+    println(a)
+    println(b)
+    println(c)
+    return when {
+        (a + b) < c -> true
+        else -> false
+    }
+}
 
 /**
  * Средняя
