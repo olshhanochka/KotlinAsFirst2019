@@ -6,6 +6,8 @@ import lesson2.task1.ageDescription
 import lesson2.task2.circleInside
 import lesson2.task2.daysInMonth
 import lesson2.task2.isNumberHappy
+import lesson3.task1.digitNumber
+import lesson3.task1.fib
 import kotlin.math.*
 
 /**
@@ -53,6 +55,8 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  * Пример главной функции
  */
 fun main() {
+    println(fib(5))
+    //println(digitNumber(1))
     //println (daysInMonth(2, 2020))
     //println (isNumberHappy(1234))
    // println (ageDescription(350))
