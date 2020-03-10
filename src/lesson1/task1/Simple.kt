@@ -55,7 +55,8 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  * Пример главной функции
  */
 fun main() {
-    println(fib(5))
+   
+//    println(fib(5))
     //println(digitNumber(1))
     //println (daysInMonth(2, 2020))
     //println (isNumberHappy(1234))
@@ -65,8 +66,8 @@ fun main() {
     //println(x)
     //val x = accountInThreeYears(100, 10)
     //println(x)
-    //val x = travelMinutes(9, 25, 13, 1)
-    //println(x)
+    val x = travelMinutes(9, 25, 13, 1)
+    println(x)
     //val db = trackLength (3.0,0.0,0.0,4.0)
     //println (db)
     //val db = angleInRadian (36, 14,35)
@@ -162,9 +163,12 @@ fun thirdDigit(number: Int): Int {
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    val a = (hoursDepart * 3600) + (minutesDepart * 60)
-    val b = (hoursArrive * 3600) + (minutesArrive * 60)
+fun travelMinutes(vararg trav : Int): Int {
+    return travelMinutes(trav.toList())
+}
+fun travelMinutes(trav: List<Int>): Int {
+    val a = (trav[0] * 3600) + (trav[1] * 60)
+    val b = (trav[2] * 3600) + (trav[3] * 60)
     val c = (b - a) / 60
     return c
 }
