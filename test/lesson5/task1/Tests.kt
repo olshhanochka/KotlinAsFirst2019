@@ -122,6 +122,8 @@ class Tests {
     @Tag("Easy")
     fun containsIn() {
         assertTrue(containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")))
+        assertTrue(containsIn(mapOf("a" to "z", "b" to "kglf", "c" to "rest"), mapOf("a" to "z", "b" to "kglf")))
+        assertFalse(containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")))
         assertFalse(containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")))
     }
 
@@ -129,13 +131,13 @@ class Tests {
     @Tag("Easy")
     fun subtractOf() {
         val from = mutableMapOf("a" to "z", "b" to "c")
-
+        println(from)
         subtractOf(from, mapOf())
         assertEquals(from, mapOf("a" to "z", "b" to "c"))
-
+        println(from)
         subtractOf(from, mapOf("b" to "z"))
         assertEquals(from, mapOf("a" to "z", "b" to "c"))
-
+        println(from)
         subtractOf(from, mapOf("a" to "z"))
         assertEquals(from, mapOf("b" to "c"))
     }

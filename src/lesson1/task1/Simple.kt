@@ -8,6 +8,7 @@ import lesson2.task2.daysInMonth
 import lesson2.task2.isNumberHappy
 import lesson3.task1.digitNumber
 import lesson3.task1.fib
+import lesson5.task1.buildGrades
 import kotlin.math.*
 
 /**
@@ -55,7 +56,7 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  * Пример главной функции
  */
 fun main() {
-   
+    buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
 //    println(fib(5))
     //println(digitNumber(1))
     //println (daysInMonth(2, 2020))
@@ -66,8 +67,8 @@ fun main() {
     //println(x)
     //val x = accountInThreeYears(100, 10)
     //println(x)
-    val x = travelMinutes(9, 25, 13, 1)
-    println(x)
+//    val x = travelMinutes(9, 25, 13, 1)
+//    println(x)
     //val db = trackLength (3.0,0.0,0.0,4.0)
     //println (db)
     //val db = angleInRadian (36, 14,35)

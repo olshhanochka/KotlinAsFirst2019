@@ -52,6 +52,8 @@ fun negativeList(list: List<Int>): List<Int> {
             result.add(element)
         }
     }
+    print("  \\ \'   \"  yyy\njjj        "
+    )
     return result
 }
 

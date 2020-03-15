@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import lesson7.task1.countSubstrings
+import java.lang.System.gc
 import kotlin.math.sqrt
 
 /**
@@ -76,6 +77,7 @@ fun digitNumber(n: Int): Int {
         number /= 10
         count++
     }
+    gc()
     return count
 }
 

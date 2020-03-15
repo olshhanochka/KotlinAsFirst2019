@@ -89,9 +89,33 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *
  * Например:
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
- *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
+ *     -> mapOf(5 to listOf("емён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    // создание нового пустого списка с именем name
+    var name = mutableMapOf<Int, List<String>>()
+    // цикл с перебором каждого элемента списка grades,
+    // при переборе каждый последующий элемент списка называется item
+    for (item in grades) {
+        // создание переменной , которая берет значение value из списка name с ключом = оценке
+        println(item)
+        val ght = name[item.value]
+        if (ght != null) {
+//мы сюда попали,потому что ключи одинаковые
+            println("item.value=" + item.value)
+            println("item.key=" + item.key)
+            println("ght=" + ght)
+
+            name[item.value] = ght + item.key
+
+        } else {
+            //если ght(элемент списка name = null, добавлять ключ и value в список name
+            name[item.value] = listOf(item.key)
+
+        }
+    }
+    return name
+}
 
 /**
  * Простая
@@ -103,7 +127,20 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    var c = 0
+    for ((key1, value1) in b) {
+        for ((key, value) in a) {
+            if (key1 == key) {
+                if (value1 == value) {
+                    c += 1
+                }
+            }
+        }
+    }
+    return a.size == c
+
+}
 
 /**
  * Простая
@@ -119,7 +156,23 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TODO()
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>){
+    var c = mutableListOf<String>()
+    for (item in a){
+        for (temp in b){
+            if (item.key == temp.key){
+                if (item.value == temp.value){
+                    println("gg")
+                   c.add(item.key)
+                }
+
+            }
+        }
+    }
+    for (tyu in c){
+        a.remove(tyu)
+    }
+}
 
 /**
  * Простая
