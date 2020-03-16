@@ -5,6 +5,7 @@ package lesson4.task1
 import lesson1.task1.discriminant
 import lesson5.task1.averageStockPrice
 import kotlin.coroutines.coroutineContext
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -145,7 +146,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
     for (i in 0 until list.size) {
         list[i] -= a
     }
-return list
+    return list
 }
 
 /**
@@ -155,7 +156,20 @@ return list
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    if (a.isEmpty() || b.isEmpty())
+        return 0
+    if (a.size == b.size) {
+        val d = mutableListOf<Int>()
+        for (i in a.indices) {
+            val c = a[i] * b[i]
+            d.add(c)
+        }
+        return d.sum()
+    }
+    return 0
+}
+
 
 /**
  * Средняя
