@@ -3,6 +3,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson5.task1.averageStockPrice
+import kotlin.coroutines.coroutineContext
 import kotlin.math.sqrt
 
 /**
@@ -52,7 +54,8 @@ fun negativeList(list: List<Int>): List<Int> {
             result.add(element)
         }
     }
-    print("  \\ \'   \"  yyy\njjj        "
+    print(
+        "  \\ \'   \"  yyy\njjj        "
     )
     return result
 }
@@ -126,7 +129,7 @@ fun abs(v: List<Double>): Double = TODO()
  */
 fun mean(list: List<Double>): Double {
     if (list.isEmpty()) return 0.0
-    return list. average()
+    return list.average()
 }
 
 /**
@@ -137,7 +140,13 @@ fun mean(list: List<Double>): Double {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    val a = list.average()
+    for (i in 0 until list.size) {
+        list[i] -= a
+    }
+return list
+}
 
 /**
  * Средняя

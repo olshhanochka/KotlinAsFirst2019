@@ -128,19 +128,33 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    var c = 0
-    for ((key1, value1) in b) {
-        for ((key, value) in a) {
-            if (key1 == key) {
-                if (value1 == value) {
-                    c += 1
-                }
-            }
-        }
-    }
-    return a.size == c
-
+    return a.all { b.containsKey(it.key) && b[it.key] == it.value }
+//    var c = 0
+//    for ((key, value) in a) {
+//        if (b.containsKey(key) && b[key] == value) {
+//            c += 1
+//        } else {
+//            return false
+//        }
+//    }
+//    return a.size == c
 }
+
+
+//    var c = 0
+//    for ((key1, value1) in b) {
+//        for ((key, value) in a) {
+//            if ((key1 == key) && (value1 == value)) {
+//                c += 1
+//            } else {
+//                return false
+//            }
+//        }
+//
+//    }
+//    return a.size == c
+//}
+
 
 /**
  * Простая
@@ -156,20 +170,20 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>){
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     var c = mutableListOf<String>()
-    for (item in a){
-        for (temp in b){
-            if (item.key == temp.key){
-                if (item.value == temp.value){
+    for (item in a) {
+        for (temp in b) {
+            if (item.key == temp.key) {
+                if (item.value == temp.value) {
                     println("gg")
-                   c.add(item.key)
+                    c.add(item.key)
                 }
 
             }
         }
     }
-    for (tyu in c){
+    for (tyu in c) {
         a.remove(tyu)
     }
 }
