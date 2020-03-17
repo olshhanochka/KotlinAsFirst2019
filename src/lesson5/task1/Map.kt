@@ -243,7 +243,15 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    val a = stuff.filter { it.value.first.equals(kind, true) }
+    return if (a.isNullOrEmpty()) {
+        null
+    } else {
+        val b = a.values.minBy { it.second }!!
+        a.filterValues { it == b }.keys.first()
+    }
+}
 
 /**
  * Средняя
@@ -254,7 +262,12 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    word.forEach {
+        if (!chars.contains(it)) return false
+    }
+    return true
+}
 
 /**
  * Средняя
