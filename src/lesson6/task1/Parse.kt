@@ -127,7 +127,21 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    return try {
+        if (!Regex("\\d\\d.\\d\\d.\\d\\d\\d\\d").matches(digital)) {
+            return ""
+        }
+        val sdf = SimpleDateFormat("dd.MM.yy", Locale("ru"))
+        sdf.isLenient = false
+        val pattern = "d MMMM yyyy"
+        val simpleDateFormat = SimpleDateFormat(pattern, Locale("ru"))
+        simpleDateFormat.format(sdf.parse(digital))
+    } catch (e: Exception) {
+        ""
+    }
+}
+
 
 /**
  * Средняя
@@ -143,7 +157,21 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    return try {
+        var x = phone.replace("-", "").replace(" ", "").replace("(", "").replace(")", "")
+        val a = phone.contains('+')
+        if (a) {
+            x = x.replace("+", "")
+        }
+        x.toLong()
+        if (a) "+$x" else x
+
+    } catch (e: Exception) {
+        ""
+    }
+
+}
 
 /**
  * Средняя
