@@ -47,14 +47,14 @@ fun timeSecondsToStr(seconds: Int): String {
  * Пример: консольный ввод
  */
 fun main() {
-    println("Введите время в формате ЧЧ:ММ:СС")
+    println("Введите дату в формате ДД.ММ.ГГГГ\n")
     val line = readLine()
     if (line != null) {
-        val seconds = timeStrToSeconds(line)
-        if (seconds == -1) {
-            println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
+        val dates = dateDigitToStr(line)
+        if (dates == "") {
+            println("Введённая строка $line не соответствует формату ДД.ММ.ГГГГ")
         } else {
-            println("Прошло секунд с начала суток: $seconds")
+            println("Дата: $dates")
         }
     } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")

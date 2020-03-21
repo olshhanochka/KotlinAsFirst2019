@@ -2,6 +2,8 @@
 
 package lesson7.task1
 
+
+import lesson6.task1.firstDuplicateIndex
 import java.io.File
 
 /**
@@ -53,7 +55,28 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    var a = mutableMapOf<String, Int>()
+    substrings.forEach {
+        a[it] = 0
+    }
+    File(inputName).readLines().forEach { line ->
+        if (line.isNotEmpty()) {
+            substrings.forEach { word ->
+                var newLine = line
+                while (newLine.contains(word, true)) {
+                    var b = a[word] ?: 0
+                    a[word] = ++b
+                    println("1 = " + newLine)
+                    println(word)
+                    newLine = newLine.replaceFirst(word, "", true)
+                    println("2 = " + newLine)
+                }
+            }
+        }
+    }
+    return a
+}
 
 
 /**
@@ -70,7 +93,48 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    var newStr = "" //создание строки вне цикла, чтобы не создавать строку в каждом цикле
+    val sogl = listOf<String>("ж", "ч", "ш", "щ")
+    val wrongglas = listOf<String>("ы", "я", "ю")
+    val trueglas = listOf<String>("и", "а", "у")
+    var result = mutableMapOf<String, String>()
+    sogl.forEach { word ->
+        wrongglas.forEachIndexed { index, s ->
+            var key = word + s
+            val value = word + trueglas[index]
+            result[key] = value
+        }
+    }
+    File(inputName).readLines().forEach { line ->
+        if (line.isNotEmpty()) {
+            var str = line //создает копию линии, котору можно изменять
+            result.forEach { (key, value) ->
+                while (str.contains(key, true)) {
+                    val ind = str.indexOf(key, 0, true)
+                    val a = str[ind].isLowerCase()
+                    val b = str[ind + 1].isLowerCase()
+                    var gh = value.toCharArray()
+                    if (!a) {
+                        gh[0] = gh[0].toUpperCase()
+                    }
+                    if (!b) {
+                        gh[1] = gh[1].toUpperCase()
+                    }
+                    str = str.replaceFirst(key, String(gh), true)
+
+
+                }
+
+            }
+//            val map = mapOf<String, String>("жури" to "жюри", "брошура" to "брошюра", "парашут" to "парашют")
+//            map.forEach { (key, value) ->
+//                str = str.replace(key, value, true)
+//            }
+            outputStream.write("$str\n")  // добавляем уже исправленный вариант строки в file
+        }
+    }
+    outputStream.close()
 }
 
 /**
@@ -181,9 +245,34 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    File(inputName).readLines().forEach { line ->
+        var str = line
+        dictionary.forEach { (key, value) ->
+            str = str.replace(key.toString(), value.toLowerCase(), true)
+        }
+        if (line[0].isUpperCase()) {
+            str = str.replaceFirst(str[0], str[0].toUpperCase())
+        }
+        outputStream.write("$str\n")
+
+    }
+    outputStream.close()
 }
 
+//result.forEach { (key, value) ->
+//    while (str.contains(key, true)) {
+//        val ind = str.indexOf(key, 0, true)
+//        val a = str[ind].isLowerCase()
+//        val b = str[ind + 1].isLowerCase()
+//        var gh = value.toCharArray()
+//        if (!a) {
+//            gh[0] = gh[0].toUpperCase()
+//        }
+//        if (!b) {
+//            gh[1] = gh[1].toUpperCase()
+//        }
+//        str = str.replaceFirst(key, String(gh), true)
 /**
  * Средняя
  *
@@ -244,15 +333,15 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  *
  * Соответствующий выходной файл:
 <html>
-    <body>
-        <p>
-            Lorem ipsum <i>dolor sit amet</i>, consectetur <b>adipiscing</b> elit.
-            Vestibulum lobortis. <s>Est vehicula rutrum <i>suscipit</i></s>, ipsum <s>lib</s>ero <i>placerat <b>tortor</b></i>.
-        </p>
-        <p>
-            Suspendisse <s>et elit in enim tempus iaculis</s>.
-        </p>
-    </body>
+<body>
+<p>
+Lorem ipsum <i>dolor sit amet</i>, consectetur <b>adipiscing</b> elit.
+Vestibulum lobortis. <s>Est vehicula rutrum <i>suscipit</i></s>, ipsum <s>lib</s>ero <i>placerat <b>tortor</b></i>.
+</p>
+<p>
+Suspendisse <s>et elit in enim tempus iaculis</s>.
+</p>
+</body>
 </html>
  *
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
@@ -295,67 +384,67 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
  *
  * Пример входного файла:
 ///////////////////////////////начало файла/////////////////////////////////////////////////////////////////////////////
-* Утка по-пекински
-    * Утка
-    * Соус
-* Салат Оливье
-    1. Мясо
-        * Или колбаса
-    2. Майонез
-    3. Картофель
-    4. Что-то там ещё
-* Помидоры
-* Фрукты
-    1. Бананы
-    23. Яблоки
-        1. Красные
-        2. Зелёные
+ * Утка по-пекински
+ * Утка
+ * Соус
+ * Салат Оливье
+1. Мясо
+ * Или колбаса
+2. Майонез
+3. Картофель
+4. Что-то там ещё
+ * Помидоры
+ * Фрукты
+1. Бананы
+23. Яблоки
+1. Красные
+2. Зелёные
 ///////////////////////////////конец файла//////////////////////////////////////////////////////////////////////////////
  *
  *
  * Соответствующий выходной файл:
 ///////////////////////////////начало файла/////////////////////////////////////////////////////////////////////////////
 <html>
-  <body>
-    <ul>
-      <li>
-        Утка по-пекински
-        <ul>
-          <li>Утка</li>
-          <li>Соус</li>
-        </ul>
-      </li>
-      <li>
-        Салат Оливье
-        <ol>
-          <li>Мясо
-            <ul>
-              <li>
-                  Или колбаса
-              </li>
-            </ul>
-          </li>
-          <li>Майонез</li>
-          <li>Картофель</li>
-          <li>Что-то там ещё</li>
-        </ol>
-      </li>
-      <li>Помидоры</li>
-      <li>
-        Фрукты
-        <ol>
-          <li>Бананы</li>
-          <li>
-            Яблоки
-            <ol>
-              <li>Красные</li>
-              <li>Зелёные</li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-    </ul>
-  </body>
+<body>
+<ul>
+<li>
+Утка по-пекински
+<ul>
+<li>Утка</li>
+<li>Соус</li>
+</ul>
+</li>
+<li>
+Салат Оливье
+<ol>
+<li>Мясо
+<ul>
+<li>
+Или колбаса
+</li>
+</ul>
+</li>
+<li>Майонез</li>
+<li>Картофель</li>
+<li>Что-то там ещё</li>
+</ol>
+</li>
+<li>Помидоры</li>
+<li>
+Фрукты
+<ol>
+<li>Бананы</li>
+<li>
+Яблоки
+<ol>
+<li>Красные</li>
+<li>Зелёные</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</body>
 </html>
 ///////////////////////////////конец файла//////////////////////////////////////////////////////////////////////////////
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
@@ -382,23 +471,23 @@ fun markdownToHtml(inputName: String, outputName: String) {
  * Вывести в выходной файл процесс умножения столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 111):
-   19935
-*    111
+19935
+ *    111
 --------
-   19935
+19935
 + 19935
 +19935
 --------
- 2212785
+2212785
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  * Нули в множителе обрабатывать так же, как и остальные цифры:
-  235
-*  10
+235
+ *  10
 -----
-    0
+0
 +235
 -----
- 2350
+2350
  *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
@@ -412,16 +501,16 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  * Вывести в выходной файл процесс деления столбиком числа lhv (> 0) на число rhv (> 0).
  *
  * Пример (для lhv == 19935, rhv == 22):
-  19935 | 22
- -198     906
- ----
-    13
-    -0
-    --
-    135
-   -132
-   ----
-      3
+19935 | 22
+-198     906
+----
+13
+-0
+--
+135
+-132
+----
+3
 
  * Используемые пробелы, отступы и дефисы должны в точности соответствовать примеру.
  *
