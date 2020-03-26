@@ -121,7 +121,7 @@ data class Segment(val begin: Point, val end: Point) {
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
 fun diameter(vararg points: Point): Segment {
-    if (points.size < 2){
+    if (points.size < 2) {
         throw IllegalArgumentException()
     }
     var segmentList = mutableListOf<Segment>()
@@ -130,7 +130,7 @@ fun diameter(vararg points: Point): Segment {
             segmentList.add(Segment(it1, it2))
         }
     }
-    segmentList.sortByDescending { it.distance()}
+    segmentList.sortByDescending { it.distance() }
     return segmentList.first()
 }
 
@@ -140,7 +140,12 @@ fun diameter(vararg points: Point): Segment {
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = TODO()
+fun circleByDiameter(diameter: Segment): Circle {
+    val r = (diameter.begin.distance(diameter.end) / 2)
+    val centx = (diameter.begin.x + diameter.end.x) / 2
+    val centy = (diameter.begin.y + diameter.end.y) / 2
+    return Circle(Point(centx, centy), r)
+}
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
@@ -162,16 +167,17 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
     fun crossPoint(other: Line): Point = TODO()
+}
 
-    override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
+override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
-    override fun hashCode(): Int {
-        var result = b.hashCode()
-        result = 31 * result + angle.hashCode()
-        return result
-    }
+override fun hashCode(): Int {
+    var result = b.hashCode()
+    result = 31 * result + angle.hashCode()
+    return result
+}
 
-    override fun toString() = "Line(${cos(angle)} * y = ${sin(angle)} * x + $b)"
+override fun toString() = "Line(${cos(angle)} * y = ${sin(angle)} * x + $b)"
 }
 
 /**
