@@ -63,15 +63,19 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     File(inputName).readLines().forEach { line ->
         if (line.isNotEmpty()) {
             substrings.forEach { word ->
-                var newLine = line
-                while (newLine.contains(word, true)) {
-                    var b = a[word] ?: 0
-                    a[word] = ++b
-                    println("1 = " + newLine)
-                    println(word)
-                    newLine = newLine.replaceFirst(word, "", true)
-                    println("2 = " + newLine)
+                val l = word.length
+                for (k in 0..(line.length - l)) {
+                    val s = line.substring(k, k + l)
+                    if (s.equals(word, true)) {
+                        var b = a[word] ?: 0
+                        a[word] = ++b
+
+                    }
                 }
+//                var match =
+//                    "($word+)".toLowerCase().toRegex().findAll(line.toLowerCase()).map { it.groups.count() }.sum()
+//                var b = a[word] ?: 0
+//                a[word] = b + match
             }
         }
     }
@@ -94,7 +98,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  */
 fun sibilants(inputName: String, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
-    var newStr = "" //создание строки вне цикла, чтобы не создавать строку в каждом цикле
+//    var newStr = "" //создание строки вне цикла, чтобы не создавать строку в каждом цикле
     val sogl = listOf<String>("ж", "ч", "ш", "щ")
     val wrongglas = listOf<String>("ы", "я", "ю")
     val trueglas = listOf<String>("и", "а", "у")
