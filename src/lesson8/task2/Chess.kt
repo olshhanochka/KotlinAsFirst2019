@@ -2,6 +2,10 @@
 
 package lesson8.task2
 
+import lesson4.task1.abs
+import java.lang.IllegalArgumentException
+import kotlin.math.abs
+
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -22,7 +26,22 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String = TODO()
+    fun notation(): String {
+        return if (inside()) {
+            val a = when (column) {
+                1 -> "a"
+                2 -> "b"
+                3 -> "c"
+                4 -> "d"
+                5 -> "e"
+                6 -> "f"
+                7 -> "g"
+                8 -> "h"
+                else -> ""
+            }
+            "$a$row"
+        } else ""
+    }
 }
 
 /**
@@ -32,7 +51,31 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    try {
+        val d = notation[0].toString()
+        val c = notation[1].toString().toInt()
+        val b = when (d) {
+            "a" -> 1
+            "b" -> 2
+            "c" -> 3
+            "d" -> 4
+            "e" -> 5
+            "f" -> 6
+            "g" -> 7
+            "h" -> 8
+            else -> 0
+        }
+        val s = Square(b, c)
+        return if (s.inside())
+            s
+        else throw IllegalArgumentException()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        throw IllegalArgumentException()
+    }
+
+}
 
 /**
  * Простая
@@ -57,7 +100,16 @@ fun square(notation: String): Square = TODO()
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int = TODO()
+fun rookMoveNumber(start: Square, end: Square): Int {
+    throw if (start.inside() && end.inside()) {
+        if (start != end) {
+            return if (start.column == end.column || start.row == end.row) {
+                1
+            } else 2
+        }
+        return 0
+    } else throw IllegalArgumentException()
+}
 
 /**
  * Средняя
@@ -73,7 +125,22 @@ fun rookMoveNumber(start: Square, end: Square): Int = TODO()
  *          rookTrajectory(Square(3, 5), Square(8, 5)) = listOf(Square(3, 5), Square(8, 5))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun rookTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun rookTrajectory(start: Square, end: Square): List<Square> {
+    val listik = mutableListOf<Square>()
+    when (rookMoveNumber(start, end)) {
+        0 -> listik.add(start)
+        1 -> {
+            listik.addAll(listOf(start, end))
+        }
+        2 -> {
+            listik.add(start)
+            listik.add(Square(end.column, start.row))
+            listik.add(end)
+        }
+    }
+    return listik
+
+}
 
 /**
  * Простая
@@ -140,7 +207,25 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+fun kingMoveNumber(start: Square, end: Square): Int {
+    val razn = abs(start.column - end.column)
+    val razn2 = abs(start.row - end.row)
+    val suma = start.column + start.row
+    val summ = end.column + end.row
+    val rok = abs(start.row - start.column)
+    val rokk = abs(end.row - end.column)
+    if (start.column == end.column) {
+        return razn2
+    } else
+        if (start.row == end.row) {
+            return razn
+        } else if (suma == summ) {
+            return abs(start.column - end.column)
+        } else if (rok == rokk) {
+            return abs(end.column - start.column)
+        } else return razn + razn2
+return 0
+}
 
 /**
  * Сложная
