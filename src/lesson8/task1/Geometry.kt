@@ -144,7 +144,7 @@ fun circleByDiameter(diameter: Segment): Circle {
     val r = (diameter.begin.distance(diameter.end) / 2)
     val centx = (diameter.begin.x + diameter.end.x) / 2
     val centy = (diameter.begin.y + diameter.end.y) / 2
-    return Circle(Point(centx, centy), r)
+    return Circle (Point(centx, centy), r)
 }
 
 /**
@@ -167,17 +167,16 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
     fun crossPoint(other: Line): Point = TODO()
-}
 
-override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
+    override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
-override fun hashCode(): Int {
-    var result = b.hashCode()
-    result = 31 * result + angle.hashCode()
-    return result
-}
+    override fun hashCode(): Int {
+        var result = b.hashCode()
+        result = 31 * result + angle.hashCode()
+        return result
+    }
 
-override fun toString() = "Line(${cos(angle)} * y = ${sin(angle)} * x + $b)"
+    override fun toString() = "Line(${cos(angle)} * y = ${sin(angle)} * x + $b)"
 }
 
 /**
