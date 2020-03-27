@@ -208,23 +208,35 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 fun kingMoveNumber(start: Square, end: Square): Int {
-    val razn = abs(start.column - end.column)
+    println("\n\nstart = $start")
+    println("end = $end")
+    var razn = abs(start.column - end.column)
     val razn2 = abs(start.row - end.row)
+    println("razn = $razn")
+    println("razn2 = $razn2")
     val suma = start.column + start.row
     val summ = end.column + end.row
+    println("suma = $suma")
+    println("summ = $summ")
     val rok = abs(start.row - start.column)
     val rokk = abs(end.row - end.column)
-    if (start.column == end.column) {
-        return razn2
-    } else
-        if (start.row == end.row) {
-            return razn
-        } else if (suma == summ) {
-            return abs(start.column - end.column)
-        } else if (rok == rokk) {
-            return abs(end.column - start.column)
-        } else return razn + razn2
-return 0
+    println("rok = $rok")
+    println("rokk = $rokk")
+    if (start != end) {
+        return if (start.column == end.column) {
+            razn2
+        } else
+            if (start.row == end.row) {
+                razn
+            } else if (suma == summ) {
+                abs(start.column - end.column)
+            } else if (rok == rokk) {
+                abs(end.column - start.column)
+            } else {
+                if (razn > razn2) razn else razn2
+            }
+    }
+    return 0
 }
 
 /**

@@ -3,6 +3,7 @@ package lesson8.task2
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.math.abs
 
 class Tests {
@@ -110,9 +111,24 @@ class Tests {
         assertEquals(7, kingMoveNumber(square("a8"), square("h1")))
         assertEquals(6, kingMoveNumber(square("a8"), square("g8")))
         assertEquals(7, kingMoveNumber(square("a1"), square("h8")))
+        assertEquals(7, kingMoveNumber(square("a1"), square("a8")))
+        assertEquals(3, kingMoveNumber(square("a8"), square("a5")))
+        assertEquals(5, kingMoveNumber(square("b2"), square("g2")))
+        assertEquals(5, kingMoveNumber(square("g2"), square("b2")))
         assertEquals(2, kingMoveNumber(square("g8"), square("f6")))
         assertEquals(7, kingMoveNumber(square("g8"), square("f1")))
-        assertEquals(4, kingMoveNumber(square("h8"), square("e5")))
+        assertEquals(7, kingMoveNumber(square("g8"), square("e1")))
+        assertEquals(3, kingMoveNumber(square("h8"), square("e5")))
+        assertEquals(3, kingMoveNumber(square("a8"), square("d6")))
+        assertEquals(5, kingMoveNumber(square("a8"), square("f6")))
+        assertEquals(3, kingMoveNumber(square("h4"), square("e6")))
+        assertEquals(3, kingMoveNumber(square("h4"), square("e3")))
+        assertEquals(4, kingMoveNumber(square("h2"), square("d4")))
+        assertEquals(6, kingMoveNumber(square("b3"), square("h7")))
+        assertThrows<IllegalArgumentException> {
+            kingMoveNumber(square("99"), square("876"))
+        }
+
 
     }
 
