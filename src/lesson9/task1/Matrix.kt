@@ -2,6 +2,8 @@
 
 package lesson9.task1
 
+import java.lang.IllegalArgumentException
+
 /**
  * Ячейка матрицы: row = ряд, column = колонка
  */
@@ -41,32 +43,52 @@ interface Matrix<E> {
  * height = высота, width = ширина, e = чем заполнить элементы.
  * Бросить исключение IllegalArgumentException, если height или width <= 0.
  */
-fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> = TODO()
+fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> {
+    if (height <= 0 || width <= 0) {
+        throw IllegalArgumentException()
+    }
+    return MatrixImpl<E>(height, width, e)
+}
 
 /**
  * Средняя сложность
  *
  * Реализация интерфейса "матрица"
  */
-class MatrixImpl<E> : Matrix<E> {
-    override val height: Int = TODO()
-
-    override val width: Int = TODO()
+class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : Matrix<E> {
 
     override fun get(row: Int, column: Int): E = TODO()
 
-    override fun get(cell: Cell): E = TODO()
+    override fun get(cell: Cell): E {
+        return get(cell.row, cell.column)
+    }
 
     override fun set(row: Int, column: Int, value: E) {
         TODO()
     }
 
     override fun set(cell: Cell, value: E) {
-        TODO()
+        set(cell.row, cell.column, value)
     }
 
-    override fun equals(other: Any?) = TODO()
+    override fun equals(other: Any?) =
+        other is MatrixImpl<*> &&
+                height == other.height &&
+                width == other.width // && elements comparison
 
-    override fun toString(): String = TODO()
+    override fun toString(): String {
+        val sb = StringBuilder()
+        sb.append("[")
+        for (row in 0..height - 1) {
+            sb.append("[")
+            for (column in 0..width - 1) {
+                sb.append(this[row, column])
+                // Подумайте здесь про запятые и пробелы, или попробуйте использовать joinToString
+            }
+            sb.append("]")
+        }
+        sb.append("]")
+        return "$sb" // or, sb.toString()
+    }
 }
 
