@@ -56,15 +56,18 @@ fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> {
  * Реализация интерфейса "матрица"
  */
 class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : Matrix<E> {
+    val storage: MutableList<MutableList<E>> = MutableList(height) { MutableList(width) { e } }
 
-    override fun get(row: Int, column: Int): E = TODO()
+    override fun get(row: Int, column: Int): E {
+        return storage[row][column]
+    }
 
     override fun get(cell: Cell): E {
         return get(cell.row, cell.column)
     }
 
     override fun set(row: Int, column: Int, value: E) {
-        TODO()
+        storage[row][column] = value
     }
 
     override fun set(cell: Cell, value: E) {
