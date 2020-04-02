@@ -3,7 +3,9 @@
 package lesson9.task2
 
 import lesson9.task1.Matrix
+import lesson9.task1.MatrixImpl
 import lesson9.task1.createMatrix
+import java.lang.IllegalArgumentException
 
 // Все задачи в этом файле требуют наличия реализации интерфейса "Матрица" в Matrix.kt
 
@@ -104,7 +106,20 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    var new = matrix
+    var old = matrix
+    if (matrix.height != matrix.width) {
+        throw IllegalArgumentException()
+    } else
+        for (i in 0 until matrix.height) {
+            for (t in 0 until matrix.width) {
+                old[matrix.height - 1 - t, i] = new[i, t]
+            }
+
+        }
+    return new
+}
 
 /**
  * Сложная
@@ -176,7 +191,29 @@ data class Holes(val rows: List<Int>, val columns: List<Int>)
  *
  * К примеру, центральный элемент 12 = 1 + 2 + 4 + 5, элемент в левом нижнем углу 12 = 1 + 4 + 7 и так далее.
  */
-fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> = TODO()
+fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> {
+    var old = matrix as MatrixImpl
+    var new = matrix
+    var h = matrix.height
+    var w = matrix.width
+    for (a in 0 until h) {
+        for (b in 0 until w) {
+            old[a, b]
+            if (a != 0 && b != 0) {
+                var newMatr = createMatrix(a + 1, b + 1, Int)
+                var cc = 0
+                for (i in 0 until newMatr.height) {
+                    for (t in 0 until newMatr.width) {
+                        cc += old[i, t]
+                    }
+                }
+                new[a, b] = cc
+            }
+        }
+    }
+return new
+
+}
 
 /**
  * Сложная
