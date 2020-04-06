@@ -2,6 +2,7 @@
 
 package lesson12.task1
 
+import java.util.*
 import java.util.Collections.list
 
 /**
@@ -125,6 +126,15 @@ class PhoneBook {
      * Порядок людей / порядок телефонов в книге не должен иметь значения.
      */
     override fun equals(other: Any?): Boolean {
-        
+        return if (other !is PhoneBook) {
+            false
+        } else {
+            (other.cont.keys.containsAll(cont.keys)
+                    && (other.cont.values.flatten().containsAll(cont.values.flatten())))
+        }
+    }
+
+    override fun hashCode(): Int {
+        return cont.keys.hashCode() + cont.values.flatten().sorted().hashCode()
     }
 }
